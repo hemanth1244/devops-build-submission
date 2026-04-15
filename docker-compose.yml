@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  devops-build-app:
+    image: hemanth10bh1010/dev:latest
+    container_name: devops-build-app
+    ports:
+      - "80:80"
+    restart: unless-stopped

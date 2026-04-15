@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*.swp
+
+# Environment files
+.env
+
+# Docker
+docker-image.tar
+
+# IDE files
+.vscode/
+.idea/
