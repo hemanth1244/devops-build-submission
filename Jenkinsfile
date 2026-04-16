@@ -54,26 +54,28 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Deploy Application') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
-                        sh '''
-                        docker ps -aq | grep myapp-dev-container && docker rm -f myapp-dev-container || true
-                        docker run -d -p 3000:80 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
-                        '''
-                    } else if (env.BRANCH_NAME == 'master') {
-                        sh '''
-                        docker ps -aq | grep myapp-dev-container && docker rm -f myapp-dev-container || true
-                        docker run -d -p 3000:80 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
-                        '''
-                    }
-                }
+                       sh '''
+                       if docker ps -a --format '{{.Names}}' | grep -w myapp-dev-container; then
+                       docker rm -f myapp-dev-container
+                    fi
+                    docker run -d -p 3000:80 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
+                    '''
+                   } else if (env.BRANCH_NAME == 'master') {
+                      sh '''
+                    if docker ps -a --format '{{.Names}}' | grep -w myapp-prod-container; then
+                       docker rm -f myapp-prod-container
+                    fi
+                       docker run -d -p 3001:80 --name myapp-prod-container hemanth10bh1010/myapp-prod:latest
+                     '''
             }
         }
     }
-
+}
     post {
         success {
             echo "Build SUCCESS"
