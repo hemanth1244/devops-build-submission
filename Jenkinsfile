@@ -60,13 +60,13 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
                         sh '''
-                        docker rm -f myapp-dev-container || true
-                        docker run -d -p 3000:3000 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
+                        docker ps -aq | grep myapp-dev-container && docker rm -f myapp-dev-container || true
+                        docker run -d -p 3000:80 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
                         '''
                     } else if (env.BRANCH_NAME == 'master') {
                         sh '''
-                        docker rm -f myapp-prod-container || true
-                        docker run -d -p 3001:3000 --name myapp-prod-container hemanth10bh1010/myapp-prod:latest
+                        docker ps -aq | grep myapp-dev-container && docker rm -f myapp-dev-container || true
+                        docker run -d -p 3000:80 --name myapp-dev-container hemanth10bh1010/myapp-dev:latest
                         '''
                     }
                 }
