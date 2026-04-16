@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDS = 'dockerhub-creds'
         DEV_IMAGE  = 'hemanth10bh1010/myapp-dev'
-        PROD_IMAGE = 'hemanth10bh1010/myapp-prod'
+        PROD_IMAGE = 'hemanth10bh1010/prod'
     }
 
     stages {
@@ -77,7 +77,7 @@ pipeline {
                                 docker rm -f myapp-prod-container
                             fi
 
-                            docker run -d -p 3001:80 --name myapp-prod-container hemanth10bh1010/myapp-prod:latest
+                            docker run -d -p 3001:80 --name myapp-prod-container hemanth10bh1010/prod:latest
                             '''
                         }
                     }
