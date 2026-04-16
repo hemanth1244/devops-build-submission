@@ -71,13 +71,14 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                            docker pull hemanth10bh1010/myapp-prod:latest
+                            docker pull hemanth10bh1010/prod:latest
 
                             if docker ps -a --format '{{.Names}}' | grep -w myapp-prod-container; then
                                 docker rm -f myapp-prod-container
                             fi
 
                             docker run -d -p 3001:80 --name myapp-prod-container hemanth10bh1010/prod:latest
+                            docker logout
                             '''
                         }
                     }
